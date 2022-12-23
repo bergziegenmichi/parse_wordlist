@@ -16,7 +16,10 @@ def read_pdf(print_progress: bool = True) -> str:
     pdfreader = PyPDF2.PdfFileReader(pdffile)
 
     _text = ""
-    num_pages = pdfreader.getNumPages()
+    if settings.ENDING_PAGE < settings.STARTING_PAGE:
+        num_pages = pdfreader.getNumPages()
+    else:
+        num_pages = min(pdfreader.getNumPages(), settings.ENDING_PAGE)
     percent = -1
     for page_number in range(settings.STARTING_PAGE, num_pages):
         if print_progress:
@@ -83,8 +86,10 @@ def parse_document(_text: str) -> tuple[list[Vocabulary], list[str]]:
 
         else:
             # print("adding to definition")
+            if line.isupper() and settings.FILTER_ALL_CAPS_IN_DEFINITION:
+                continue
             if definition != "":
-                definition += "\n"
+                definition += " "
             definition += "".join(filter(whitelist.__contains__, line))
 
     # print("\n"*3)

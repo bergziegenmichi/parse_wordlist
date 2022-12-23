@@ -9,8 +9,11 @@ class Vocabulary:
         self.word_types = word_types
 
     def format_for_csv(self, include_word_types: bool = True) -> str:
-        return f"{self.word}\t{self.definition}" \
+        res = f"{self.word}\t{self.definition}" \
                f"{'; '.join(self.word_types) if include_word_types else ''}\n"
+        print(res)
+        print("-"*50)
+        return res
 
     def __str__(self):
         return f"word:        {self.word}\n" \
