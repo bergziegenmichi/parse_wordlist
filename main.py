@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import PyPDF2
 import importlib
 from string import ascii_letters, ascii_uppercase
